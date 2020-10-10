@@ -1013,6 +1013,9 @@ func (parser *Parser) parseFieldTag(field *ast.Field, types []string) (*structFi
 	// json:"name,string" or json:",string"
 	hasStringTag := strings.Contains(jsonTag, ",string")
 
+	if descriptionTag := structTag.Get("description"); descriptionTag != "" {
+		structField.desc = descriptionTag
+	}
 	if exampleTag := structTag.Get("example"); exampleTag != "" {
 		if hasStringTag {
 			// then the example must be in string format
